@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Toca Vez — Menu Study Ticket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --steel-dark: #232526;
+    --steel: #34373a;
+    --steel-light: #4b4f52;
+    --paper: #f4efe2;
+    --paper-shadow: #e3dcc6;
+    --ink: #211c16;
+    --ink-soft: #6b6255;
+    --fire-red: #b3261e;
+    --chalk-green: #2f5233;
+    --brass: #a9782f;
+    --brass-light: #c99a4a;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--steel-dark);
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(255,255,255,0.03), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(255,255,255,0.025), transparent 45%);
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--ink);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 14px 60px;
+  }
+
+  .rail {
+    width: 100%;
+    max-width: 430px;
+  }
+
+  .rail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 6px 10px;
+    color: var(--brass-light);
+  }
+
+  .rail-header .brand {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  .rail-header .score {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: #cfc6b0;
+  }
+
+  .ticket {
+    background: var(--paper);
+    border-radius: 4px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.5) inset,
+      0 18px 40px rgba(0,0,0,0.45);
+    position: relative;
+    padding: 26px 22px 22px;
+    overflow: hidden;
+  }
+
+  /* torn perforated top edge, evokes tearing a ticket off a pad */
+  .ticket::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 10px;
+    background:
+      radial-gradient(circle at 8px 0, transparent 6px, var(--steel-dark) 6.5px) top left / 16px 10px repeat-x;
+  }
+
+  .ticket-eyebrow {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    margin: 8px 0 2px;
+  }
+
+  .dish-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    margin: 6px 0 4px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+  }
+
+  .progress {
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed var(--paper-shadow);
+    border-bottom: 1px dashed rgba(255,255,255,0.6);
+    margin: 0 0 14px;
+  }
+
+  .ingredient-list {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+    min-height: 40px;
+  }
+
+  .ingredient-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 14.5px;
+    padding: 5px 0;
+    line-height: 1.35;
+  }
+
+  .ingredient-list .mark {
+    flex: none;
+    width: 18px;
+    font-weight: 700;
+  }
+
+  .ingredient-list .mark.correct { color: var(--chalk-green); }
+  .ingredient-list .mark.skipped { color: var(--fire-red); }
+
+  .ingredient-list .text.correct { color: var(--ink); }
+  .ingredient-list .text.skipped { color: var(--ink-soft); text-decoration: line-through; }
+
+  .ingredient-list .blank {
+    color: var(--paper-shadow);
+    letter-spacing: 2px;
+  }
+
+  .feedback {
+    min-height: 20px;
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .feedback.correct { color: var(--chalk-green); }
+  .feedback.wrong { color: var(--fire-red); }
+  .feedback.neutral { color: var(--ink-soft); }
+
+  form.entry-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px; /* prevents iOS auto-zoom on focus */
+    padding: 12px 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    background: #fffdf8;
+    color: var(--ink);
+  }
+
+  input[type="text"]:focus {
+    outline: 3px solid var(--brass-light);
+    outline-offset: 1px;
+  }
+
+  button {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    -webkit-appearance: none;
+  }
+
+  button:focus-visible {
+    outline: 3px solid var(--brass-light);
+    outline-offset: 2px;
+  }
+
+  .btn-submit {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13px;
+    padding: 0 18px;
+  }
+  .btn-submit:active { transform: translateY(1px); }
+
+  .action-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-skip, .btn-next {
+    flex: 1;
+    font-size: 12.5px;
+    padding: 13px 8px;
+    min-height: 44px;
+  }
+
+  .btn-skip {
+    background: transparent;
+    color: var(--fire-red);
+    border: 1.5px solid var(--fire-red);
+  }
+
+  .btn-next {
+    background: var(--chalk-green);
+    color: var(--paper);
+  }
+
+  .stamp {
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 44px;
+    letter-spacing: 0.06em;
+    color: var(--fire-red);
+    border: 5px solid var(--fire-red);
+    padding: 4px 18px;
+    border-radius: 8px;
+    text-transform: uppercase;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) rotate(-9deg) scale(2.4);
+    mix-blend-mode: multiply;
+  }
+
+  .stamp.show {
+    animation: stampIn 0.4s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+
+  @keyframes stampIn {
+    0%   { opacity: 0; transform: translate(-50%, -50%) rotate(-9deg) scale(2.4); }
+    60%  { opacity: 1; transform: translate(-50%, -50%) rotate(-9deg) scale(0.92); }
+    100% { opacity: 1; transform: translate(-50%, -50%) rotate(-9deg) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stamp.show { animation: none; opacity: 1; transform: translate(-50%, -50%) rotate(-9deg) scale(1); }
+  }
+
+  .lap-banner {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--brass-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 10px;
+    min-height: 14px;
+  }
+
+  .footer-note {
+    text-align: center;
+    color: #857c6c;
+    font-size: 11px;
+    margin-top: 16px;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 360px) {
+    .dish-name { font-size: 22px; }
+    .stamp { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="rail">
+  <div class="rail-header">
+    <span class="brand">Toca Vez &middot; Study Ticket</span>
+    <span class="score" id="scoreDisplay">Score —</span>
+  </div>
+
+  <div class="ticket">
+    <div class="stamp" id="stamp">Fired</div>
+
+    <div class="ticket-eyebrow">Table 1 &middot; Course: To Begin</div>
+    <div class="dish-name" id="dishName">Loading…</div>
+    <div class="progress" id="progressText"></div>
+
+    <hr class="divider">
+
+    <ul class="ingredient-list" id="ingredientList"></ul>
+
+    <div class="feedback neutral" id="feedback">&nbsp;</div>
+
+    <form class="entry-row" id="entryForm">
+      <input type="text" id="entryInput" autocomplete="off" autocapitalize="off"
+             autocorrect="off" spellcheck="false" placeholder="type an ingredient…">
+      <button type="submit" class="btn-submit">Submit</button>
+    </form>
+
+    <div class="action-row">
+      <button type="button" class="btn-skip" id="skipBtn">Skip Ingredient</button>
+      <button type="button" class="btn-next" id="nextBtn">Next Dish</button>
+    </div>
+
+    <div class="lap-banner" id="lapBanner">&nbsp;</div>
+  </div>
+
+  <div class="footer-note">Tap a field, type, hit enter. Score saves on this device.</div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------------------------------------------------------------
+  // MENU DATA — same dish -> ingredient list shape as the Python dict
+  // and the Java Map<String, List<String>> versions.
+  // ---------------------------------------------------------------
+  const MENU = {
+    "shrimp ceviche": ["chili citrus juice", "diced mango", "avocado", "cucumber", "serrano pepper", "tortilla chips"],
+    "lobster quesadilla": ["lobster", "jalapeno aioli", "mango salsa"],
+    "charred thick cut bacon": ["thick cut bacon", "maple syrup"],
+    "house guacamole": ["smashed ripe avocado", "lime juice", "serrano pepper", "red onion", "cilantro"],
+    "golden fried calamari": ["calamari", "fried jalapenos", "chipotle aioli"],
+    "tuna tostada": ["sushi grade yellowfin tuna", "lime and avocado", "ginger sesame seeds", "mango", "chipotle cilantro cream"],
+    "garlic shrimp": ["shrimp", "smoky garlic chili", "lemon", "herbs", "grilled cracker"],
+    "sweet corn tamales": ["jumbo lump crabmeat", "pico de gallo", "smashed avocado", "chipotle aioli"],
+    "seared yellowfin tuna": ["sesame crusted sushi grade tuna", "sliced cucumber", "grilled pineapple", "spicy avocado puree"],
+    "coconut shrimp & sweet plantain croquette": ["coconut shrimp", "avocado hearts of palm salad", "spicy chili aioli", "soy glaze"],
+    "colossal shrimp cocktail": ["three jumbo shrimp", "cocktail sauce", "lemon wedge"],
+    "queso fondue style": ["green chili", "warm tortilla chips"],
+
+    "tempura shrimp taco": ["tempura shrimp", "smashed avocado", "red cabbage slaw", "chipotle honey aioli"],
+    "beef short rib taco": ["slow braised short rib", "mushroom", "asadero cheese", "pickled jalapeno and onion", "lime cilantro cream"],
+    "crispy chicken taco": ["braised chicken tinga", "jalapeno monterey cheese", "grilled corn tomato pico", "fresh cilantro", "salsa verde"],
+    "veggie taco": ["chipotle lime marinated portobello mushroom", "mashed avocado", "pinto bean puree", "corn salsa", "pickled onion"],
+
+    "caesar salad": ["romaine lettuce", "parmesan cheese", "caesar dressing"],
+    "toca vez salad": ["romaine", "roasted corn", "avocado", "radish", "cherry tomato", "cotija cheese", "lime cilantro dressing"],
+    "wedge salad": ["cherry tomato", "raw onion", "bacon", "bleu cheese"],
+
+    "all natural half roasted chicken": ["herb marinade", "rice and black beans", "pepper and onion sofrito", "pickled jalapeno", "coconut cream"],
+    "boneless beef short rib": ["mashed potato", "baby carrot", "fried shallots", "balsamic glaze"],
+    "pork chop": ["sweet potato au gratin", "brussels sprouts", "bacon", "maple glaze"],
+    "faroe island salmon fillet": ["charred scallion jasmine rice", "pepper and onion sofrito", "seasonal citrus beurre blanc"],
+    "colossal shrimp & poblano pepper risotto": ["house seasoning shrimp", "asparagus and red pepper risotto"],
+    "seared jumbo sea scallops": ["sweet corn edamame succotash", "lime roasted pepper", "cilantro", "bacon lardons", "cranberry and mango chutney"],
+    "chicken enchilada": ["queso fresco", "pinto bean puree", "cilantro lime rice", "salsa verde"],
+    "chilean sea bass": ["sweet corn jasmine rice", "seasonal vegetable", "escabeche curry"]
+  };
+
+  // ---------------------------------------------------------------
+  // STATE
+  // ---------------------------------------------------------------
+  let dishPool = [];
+  let currentDish = null;
+  let remaining = [];
+  let revealed = []; // {text, status: 'correct' | 'skipped'}
+
+  let scoreCorrect = Number(localStorage.getItem("tv_score_correct") || 0);
+  let scoreTotal = Number(localStorage.getItem("tv_score_total") || 0);
+
+  // ---------------------------------------------------------------
+  // DOM
+  // ---------------------------------------------------------------
+  const dishNameEl = document.getElementById("dishName");
+  const progressEl = document.getElementById("progressText");
+  const listEl = document.getElementById("ingredientList");
+  const feedbackEl = document.getElementById("feedback");
+  const entryForm = document.getElementById("entryForm");
+  const entryInput = document.getElementById("entryInput");
+  const skipBtn = document.getElementById("skipBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const scoreDisplay = document.getElementById("scoreDisplay");
+  const lapBanner = document.getElementById("lapBanner");
+  const stampEl = document.getElementById("stamp");
+
+  // ---------------------------------------------------------------
+  // HELPERS
+  // ---------------------------------------------------------------
+  function normalize(str) {
+    return str.toLowerCase().trim().replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ");
+  }
+
+  function findMatch(guessRaw, pool) {
+    const guess = normalize(guessRaw);
+    if (!guess) return null;
+    for (const item of pool) {
+      const itemN = normalize(item);
+      if (guess === itemN || itemN.includes(guess) || guess.includes(itemN)) {
+        return item;
+      }
+    }
+    return null;
+  }
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function saveScore() {
+    localStorage.setItem("tv_score_correct", scoreCorrect);
+    localStorage.setItem("tv_score_total", scoreTotal);
+  }
+
+  function titleCase(str) {
+    return str.replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  // ---------------------------------------------------------------
+  // GAME LOGIC
+  // ---------------------------------------------------------------
+  function newRoundPool() {
+    dishPool = shuffle(Object.keys(MENU));
+  }
+
+  function nextDish() {
+    stampEl.classList.remove("show");
+
+    if (dishPool.length === 0) {
+      newRoundPool();
+      lapBanner.textContent = "Full lap through the menu complete — starting over";
+    } else {
+      lapBanner.textContent = "";
+    }
+
+    currentDish = dishPool.pop();
+    remaining = [...MENU[currentDish]];
+    revealed = [];
+
+    dishNameEl.textContent = titleCase(currentDish);
+    entryInput.value = "";
+    feedbackEl.textContent = "\u00A0";
+    feedbackEl.className = "feedback neutral";
+    render();
+    entryInput.focus();
+  }
+
+  function render() {
+    const total = MENU[currentDish].length;
+    const done = total - remaining.length;
+    progressEl.textContent = `${done} / ${total} found`;
+    scoreDisplay.textContent = scoreTotal > 0
+      ? `Score ${scoreCorrect}/${scoreTotal}`
+      : "Score —";
+
+    listEl.innerHTML = "";
+    revealed.forEach(entry => {
+      const li = document.createElement("li");
+      const mark = document.createElement("span");
+      const text = document.createElement("span");
+      mark.className = "mark " + entry.status;
+      text.className = "text " + entry.status;
+      mark.textContent = entry.status === "correct" ? "\u2713" : "\u2717";
+      text.textContent = entry.text;
+      li.appendChild(mark);
+      li.appendChild(text);
+      listEl.appendChild(li);
+    });
+    remaining.forEach(() => {
+      const li = document.createElement("li");
+      const mark = document.createElement("span");
+      const text = document.createElement("span");
+      mark.className = "mark";
+      mark.textContent = "?";
+      text.className = "blank";
+      text.textContent = "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014";
+      li.appendChild(mark);
+      li.appendChild(text);
+      listEl.appendChild(li);
+    });
+
+    if (remaining.length === 0) {
+      feedbackEl.textContent = "Dish complete — tap Next Dish to continue";
+      feedbackEl.className = "feedback correct";
+      stampEl.classList.add("show");
+    }
+  }
+
+  function submitGuess() {
+    const guess = entryInput.value;
+    entryInput.value = "";
+    if (!guess.trim() || remaining.length === 0) return;
+
+    scoreTotal++;
+    const match = findMatch(guess, remaining);
+
+    if (match) {
+      remaining = remaining.filter(i => i !== match);
+      revealed.push({ text: match, status: "correct" });
+      scoreCorrect++;
+      feedbackEl.textContent = `Correct: ${match}`;
+      feedbackEl.className = "feedback correct";
+    } else {
+      feedbackEl.textContent = "Not quite — try again, or skip it";
+      feedbackEl.className = "feedback wrong";
+    }
+
+    saveScore();
+    render();
+  }
+
+  function skipIngredient() {
+    if (remaining.length === 0) return;
+    const item = remaining.shift();
+    revealed.push({ text: item, status: "skipped" });
+    feedbackEl.textContent = `Skipped — answer was: ${item}`;
+    feedbackEl.className = "feedback neutral";
+    render();
+  }
+
+  // ---------------------------------------------------------------
+  // EVENTS
+  // ---------------------------------------------------------------
+  entryForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    submitGuess();
+  });
+  skipBtn.addEventListener("click", skipIngredient);
+  nextBtn.addEventListener("click", nextDish);
+
+  // ---------------------------------------------------------------
+  // INIT
+  // ---------------------------------------------------------------
+  newRoundPool();
+  nextDish();
+})();
+</script>
+
+</body>
+</html>
