@@ -44,10 +44,7 @@
     padding: 24px 14px 60px;
   }
 
-  .rail {
-    width: 100%;
-    max-width: 430px;
-  }
+  .rail { width: 100%; max-width: 430px; }
 
   .rail-header {
     display: flex;
@@ -65,31 +62,23 @@
     text-transform: uppercase;
   }
 
-  .rail-header .score {
-    font-size: 12px;
-    letter-spacing: 0.05em;
-    color: #cfc6b0;
-  }
+  .rail-header .score { font-size: 12px; letter-spacing: 0.05em; color: #cfc6b0; }
 
   .ticket {
     background: var(--paper);
     border-radius: 4px;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.5) inset,
-      0 18px 40px rgba(0,0,0,0.45);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.5) inset, 0 18px 40px rgba(0,0,0,0.45);
     position: relative;
     padding: 26px 22px 22px;
     overflow: hidden;
   }
 
-  /* torn perforated top edge, evokes tearing a ticket off a pad */
   .ticket::before {
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 10px;
-    background:
-      radial-gradient(circle at 8px 0, transparent 6px, var(--steel-dark) 6.5px) top left / 16px 10px repeat-x;
+    background: radial-gradient(circle at 8px 0, transparent 6px, var(--steel-dark) 6.5px) top left / 16px 10px repeat-x;
   }
 
   .ticket-eyebrow {
@@ -102,6 +91,73 @@
     margin: 8px 0 2px;
   }
 
+  .back-link {
+    display: block;
+    margin: 0 auto 6px;
+    background: none;
+    border: none;
+    color: var(--brass);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  /* ---------- Menu screen ---------- */
+  .menu-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 24px;
+    margin: 6px 0 2px;
+  }
+  .menu-subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  .menu-list { list-style: none; margin: 0; padding: 0; }
+  .menu-item {
+    width: 100%;
+    text-align: left;
+    background: #fffdf8;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    display: block;
+  }
+  .menu-item:active { transform: translateY(1px); }
+  .menu-item .mode-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15.5px;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .menu-item .mode-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .menu-group-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin: 16px 0 8px;
+  }
+  .menu-group-label:first-of-type { margin-top: 0; }
+
+  /* ---------- Game screen ---------- */
   .dish-name {
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
@@ -109,7 +165,6 @@
     text-align: center;
     font-size: 26px;
     line-height: 1.15;
-    letter-spacing: 0.01em;
     margin: 6px 0 4px;
     min-height: 60px;
     display: flex;
@@ -117,6 +172,25 @@
     justify-content: center;
     padding: 0 4px;
   }
+
+  .prompt-label {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .given-ingredients {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
+    font-size: 14px;
+    text-align: center;
+  }
+  .given-ingredients li { padding: 3px 0; }
 
   .progress {
     text-align: center;
@@ -134,71 +208,33 @@
     margin: 0 0 14px;
   }
 
-  .ingredient-list {
-    list-style: none;
-    margin: 0 0 16px;
-    padding: 0;
-    min-height: 40px;
-  }
-
-  .ingredient-list li {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-size: 14.5px;
-    padding: 5px 0;
-    line-height: 1.35;
-  }
-
-  .ingredient-list .mark {
-    flex: none;
-    width: 18px;
-    font-weight: 700;
-  }
-
+  .ingredient-list { list-style: none; margin: 0 0 16px; padding: 0; min-height: 40px; }
+  .ingredient-list li { display: flex; align-items: baseline; gap: 8px; font-size: 14.5px; padding: 5px 0; line-height: 1.35; }
+  .ingredient-list .mark { flex: none; width: 18px; font-weight: 700; }
   .ingredient-list .mark.correct { color: var(--chalk-green); }
   .ingredient-list .mark.skipped { color: var(--fire-red); }
-
   .ingredient-list .text.correct { color: var(--ink); }
   .ingredient-list .text.skipped { color: var(--ink-soft); text-decoration: line-through; }
+  .ingredient-list .blank { color: var(--paper-shadow); letter-spacing: 2px; }
 
-  .ingredient-list .blank {
-    color: var(--paper-shadow);
-    letter-spacing: 2px;
-  }
-
-  .feedback {
-    min-height: 20px;
-    text-align: center;
-    font-size: 13px;
-    margin-bottom: 14px;
-    font-weight: 500;
-  }
+  .feedback { min-height: 20px; text-align: center; font-size: 13px; margin-bottom: 14px; font-weight: 500; }
   .feedback.correct { color: var(--chalk-green); }
   .feedback.wrong { color: var(--fire-red); }
   .feedback.neutral { color: var(--ink-soft); }
 
-  form.entry-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
+  form.entry-row { display: flex; gap: 8px; margin-bottom: 12px; }
 
   input[type="text"] {
     flex: 1;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 16px; /* prevents iOS auto-zoom on focus */
+    font-size: 16px;
     padding: 12px 12px;
     border: 1.5px solid var(--ink);
     border-radius: 3px;
     background: #fffdf8;
     color: var(--ink);
   }
-
-  input[type="text"]:focus {
-    outline: 3px solid var(--brass-light);
-    outline-offset: 1px;
-  }
+  input[type="text"]:focus { outline: 3px solid var(--brass-light); outline-offset: 1px; }
 
   button {
     font-family: 'Oswald', sans-serif;
@@ -210,41 +246,53 @@
     cursor: pointer;
     -webkit-appearance: none;
   }
+  button:focus-visible { outline: 3px solid var(--brass-light); outline-offset: 2px; }
 
-  button:focus-visible {
-    outline: 3px solid var(--brass-light);
-    outline-offset: 2px;
-  }
-
-  .btn-submit {
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 13px;
-    padding: 0 18px;
-  }
+  .btn-submit { background: var(--ink); color: var(--paper); font-size: 13px; padding: 0 18px; }
   .btn-submit:active { transform: translateY(1px); }
 
-  .action-row {
-    display: flex;
+  .action-row { display: flex; gap: 10px; }
+  .btn-skip, .btn-next { flex: 1; font-size: 12.5px; padding: 13px 8px; min-height: 44px; }
+  .btn-skip { background: transparent; color: var(--fire-red); border: 1.5px solid var(--fire-red); }
+  .btn-next { background: var(--chalk-green); color: var(--paper); }
+
+  /* ---------- Matching mode choices ---------- */
+  .choice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
+    margin-bottom: 14px;
   }
-
-  .btn-skip, .btn-next {
-    flex: 1;
+  .choice-btn {
+    background: #fffdf8;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    padding: 10px 8px;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12.5px;
-    padding: 13px 8px;
-    min-height: 44px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.25;
   }
-
-  .btn-skip {
-    background: transparent;
-    color: var(--fire-red);
-    border: 1.5px solid var(--fire-red);
+  .choice-btn:active { transform: translateY(1px); }
+  .choice-btn.wrong {
+    background: #ece7da;
+    color: #a49d8c;
+    border-color: #d8d1bd;
+    text-decoration: line-through;
+    pointer-events: none;
   }
-
-  .btn-next {
+  .choice-btn.correct-flash {
     background: var(--chalk-green);
     color: var(--paper);
+    border-color: var(--chalk-green);
   }
 
   .stamp {
@@ -265,17 +313,13 @@
     transform: translate(-50%, -50%) rotate(-9deg) scale(2.4);
     mix-blend-mode: multiply;
   }
-
-  .stamp.show {
-    animation: stampIn 0.4s cubic-bezier(.2,1.4,.4,1) forwards;
-  }
-
+  .stamp.pass { color: var(--chalk-green); border-color: var(--chalk-green); }
+  .stamp.show { animation: stampIn 0.4s cubic-bezier(.2,1.4,.4,1) forwards; }
   @keyframes stampIn {
     0%   { opacity: 0; transform: translate(-50%, -50%) rotate(-9deg) scale(2.4); }
     60%  { opacity: 1; transform: translate(-50%, -50%) rotate(-9deg) scale(0.92); }
     100% { opacity: 1; transform: translate(-50%, -50%) rotate(-9deg) scale(1); }
   }
-
   @media (prefers-reduced-motion: reduce) {
     .stamp.show { animation: none; opacity: 1; transform: translate(-50%, -50%) rotate(-9deg) scale(1); }
   }
@@ -290,13 +334,9 @@
     min-height: 14px;
   }
 
-  .footer-note {
-    text-align: center;
-    color: #857c6c;
-    font-size: 11px;
-    margin-top: 16px;
-    letter-spacing: 0.03em;
-  }
+  .footer-note { text-align: center; color: #857c6c; font-size: 11px; margin-top: 16px; letter-spacing: 0.03em; }
+
+  .hidden { display: none !important; }
 
   @media (max-width: 360px) {
     .dish-name { font-size: 22px; }
@@ -315,28 +355,72 @@
   <div class="ticket">
     <div class="stamp" id="stamp">Fired</div>
 
-    <div class="ticket-eyebrow">Table 1 &middot; Course: To Begin</div>
-    <div class="dish-name" id="dishName">Loading…</div>
-    <div class="progress" id="progressText"></div>
+    <!-- ===== MENU SCREEN ===== -->
+    <div id="menuScreen">
+      <div class="menu-title">Pick a Drill</div>
+      <div class="menu-subtitle">Choose how you want to be quizzed.</div>
 
-    <hr class="divider">
+      <div class="menu-group-label">Open-Ended (type it)</div>
+      <ul class="menu-list">
+        <li><button class="menu-item" data-mode="open-dish2ing">
+          <div class="mode-title">Type the Ingredients</div>
+          <div class="mode-desc">See the dish name, type each ingredient from memory.</div>
+        </button></li>
+        <li><button class="menu-item" data-mode="open-ing2dish">
+          <div class="mode-title">Type the Dish</div>
+          <div class="mode-desc">See the ingredient list, type the dish it belongs to.</div>
+        </button></li>
+      </ul>
 
-    <ul class="ingredient-list" id="ingredientList"></ul>
-
-    <div class="feedback neutral" id="feedback">&nbsp;</div>
-
-    <form class="entry-row" id="entryForm">
-      <input type="text" id="entryInput" autocomplete="off" autocapitalize="off"
-             autocorrect="off" spellcheck="false" placeholder="type an ingredient…">
-      <button type="submit" class="btn-submit">Submit</button>
-    </form>
-
-    <div class="action-row">
-      <button type="button" class="btn-skip" id="skipBtn">Skip Ingredient</button>
-      <button type="button" class="btn-next" id="nextBtn">Next Dish</button>
+      <div class="menu-group-label">Matching (multiple choice)</div>
+      <ul class="menu-list">
+        <li><button class="menu-item" data-mode="match-dish2ing">
+          <div class="mode-title">Match the Ingredients</div>
+          <div class="mode-desc">See the dish name, pick each ingredient from four choices.</div>
+        </button></li>
+        <li><button class="menu-item" data-mode="match-ing2dish">
+          <div class="mode-title">Match the Dish</div>
+          <div class="mode-desc">See the ingredient list, pick the correct dish from four choices.</div>
+        </button></li>
+      </ul>
     </div>
 
-    <div class="lap-banner" id="lapBanner">&nbsp;</div>
+    <!-- ===== GAME SCREEN ===== -->
+    <div id="gameScreen" class="hidden">
+      <button type="button" class="back-link" id="backBtn">&larr; back to menu</button>
+
+      <div class="ticket-eyebrow" id="modeEyebrow">Mode</div>
+
+      <div class="dish-name hidden" id="dishName"></div>
+
+      <div id="givenIngredientsWrap" class="hidden">
+        <div class="prompt-label">Which dish is this?</div>
+        <ul class="given-ingredients" id="givenIngredientsList"></ul>
+      </div>
+
+      <div class="progress" id="progressText"></div>
+
+      <hr class="divider">
+
+      <ul class="ingredient-list" id="ingredientList"></ul>
+
+      <div class="feedback neutral" id="feedback">&nbsp;</div>
+
+      <form class="entry-row" id="entryForm">
+        <input type="text" id="entryInput" autocomplete="off" autocapitalize="off"
+               autocorrect="off" spellcheck="false" placeholder="type your answer…">
+        <button type="submit" class="btn-submit">Submit</button>
+      </form>
+
+      <div class="choice-grid hidden" id="choiceGrid"></div>
+
+      <div class="action-row">
+        <button type="button" class="btn-skip" id="skipBtn">Skip</button>
+        <button type="button" class="btn-next" id="nextBtn">Next Dish</button>
+      </div>
+
+      <div class="lap-banner" id="lapBanner">&nbsp;</div>
+    </div>
   </div>
 
   <div class="footer-note">Tap a field, type, hit enter. Score saves on this device.</div>
@@ -347,8 +431,7 @@
   "use strict";
 
   // ---------------------------------------------------------------
-  // MENU DATA — same dish -> ingredient list shape as the Python dict
-  // and the Java Map<String, List<String>> versions.
+  // MENU DATA
   // ---------------------------------------------------------------
   const MENU = {
     // Appetizers
@@ -358,7 +441,7 @@
     "house guacamole": ["smashed ripe avocado", "lime", "serrano pepper", "red onion", "cilantro"],
     "golden fried calamari": ["fried jalapeno", "chipotle aioli"],
     "tuna tostada": ["ahi tuna", "avocado", "cilantro", "chile aioli"],
-    "garlic shrimp": ["smoky guajillo chili", "garlic", "lemon", " fresh herbs", "grilled crostini (grilled baguette)"],
+    "garlic shrimp": ["smoky guajillo chili", "garlic", "lemon", "fresh herbs", "grilled crostini (grilled baguette)"],
     "charred octopus tostada": ["blue-corn tostadas", "black garlic aioli", "salsa macha", "pickled red onion", "cilantro", "lime"],
     "seared yellowfin tuna": ["sesame crusted sushi grade tuna", "sliced cucumber", "jalapeno", "grilled pineapple", "spicy avocado puree"],
     "chorizo-stuffed poblano peppers": ["sofrito rice", "spanish chorizo", "manchego", "morita salsa roja", "cilantro-lime crema", "pickled red onion"],
@@ -376,7 +459,7 @@
     "toca vez salad": ["romaine", "roasted corn", "avocado", "radish", "cherry tomato", "crispy tortilla", "cotija cheese", "lime cilantro dressing"],
     "wedge salad": ["cherry tomato", "raw onion", "bacon", "bleu cheese"],
 
-    //Entrees
+    // Entrees
     "all natural half roasted chicken": ["herb marinated", "rice and black beans", "pepper and onion sofrito", "pickled jalapeno", "coconut cream"],
     "boneless beef short rib": ["mashed potato", "baby carrot", "fried shallots", "balsamic glaze (and red wine demi sauce)"],
     "pork chop": ["sweet potato au gratin", "haricot vert (french cut green bean)", "bacon lardons", "maple glaze"],
@@ -387,13 +470,30 @@
     "chilean sea bass": ["sweet corn jasmine rice", "mixed vegetable escabeche coulis"]
   };
 
+  const DISH_NAMES = Object.keys(MENU);
+  const ALL_INGREDIENTS = [...new Set(DISH_NAMES.flatMap(d => MENU[d]))];
+
+  // Each mode says: what's shown as the "given" info, what you're trying to
+  // find ("target"), and whether you type the answer or pick from choices.
+  const MODE_CONFIG = {
+    "open-dish2ing": { given: "dish",        target: "ingredient", answer: "typed",  label: "Type the Ingredients" },
+    "open-ing2dish": { given: "ingredients", target: "dish",       answer: "typed",  label: "Type the Dish" },
+    "match-dish2ing": { given: "dish",        target: "ingredient", answer: "choice", label: "Match the Ingredients" },
+    "match-ing2dish": { given: "ingredients", target: "dish",       answer: "choice", label: "Match the Dish" }
+  };
+
   // ---------------------------------------------------------------
   // STATE
   // ---------------------------------------------------------------
+  let mode = null;
   let dishPool = [];
   let currentDish = null;
-  let remaining = [];
-  let revealed = []; // {text, status: 'correct' | 'skipped'}
+  let remaining = [];   // items still to find this round (ingredients, or just [dishName])
+  let revealed = [];    // [{text, status: 'correct' | 'skipped'}]
+  let roundTotal = 0;
+  let currentChoices = [];
+  let currentTarget = null;
+  let roundHadMistake = false; // any skip or wrong answer during the current round
 
   let scoreCorrect = Number(localStorage.getItem("tv_score_correct") || 0);
   let scoreTotal = Number(localStorage.getItem("tv_score_total") || 0);
@@ -401,12 +501,20 @@
   // ---------------------------------------------------------------
   // DOM
   // ---------------------------------------------------------------
+  const menuScreen = document.getElementById("menuScreen");
+  const gameScreen = document.getElementById("gameScreen");
+  const backBtn = document.getElementById("backBtn");
+  const modeEyebrow = document.getElementById("modeEyebrow");
+
   const dishNameEl = document.getElementById("dishName");
+  const givenWrap = document.getElementById("givenIngredientsWrap");
+  const givenListEl = document.getElementById("givenIngredientsList");
   const progressEl = document.getElementById("progressText");
   const listEl = document.getElementById("ingredientList");
   const feedbackEl = document.getElementById("feedback");
   const entryForm = document.getElementById("entryForm");
   const entryInput = document.getElementById("entryInput");
+  const choiceGrid = document.getElementById("choiceGrid");
   const skipBtn = document.getElementById("skipBtn");
   const nextBtn = document.getElementById("nextBtn");
   const scoreDisplay = document.getElementById("scoreDisplay");
@@ -425,19 +533,23 @@
     if (!guess) return null;
     for (const item of pool) {
       const itemN = normalize(item);
-      if (guess === itemN || itemN.includes(guess) || guess.includes(itemN)) {
-        return item;
-      }
+      if (guess === itemN || itemN.includes(guess) || guess.includes(itemN)) return item;
     }
     return null;
   }
 
   function shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
+      [a[i], a[j]] = [a[j], a[i]];
     }
-    return arr;
+    return a;
+  }
+
+  function sample(pool, excludeSet, count) {
+    const options = pool.filter(x => !excludeSet.has(normalize(x)));
+    return shuffle(options).slice(0, count);
   }
 
   function saveScore() {
@@ -449,15 +561,40 @@
     return str.replace(/\b\w/g, c => c.toUpperCase());
   }
 
+  function refreshScoreDisplay() {
+    scoreDisplay.textContent = scoreTotal > 0 ? `Score ${scoreCorrect}/${scoreTotal}` : "Score —";
+  }
+
+  // ---------------------------------------------------------------
+  // MENU <-> GAME SCREEN
+  // ---------------------------------------------------------------
+  function showMenu() {
+    mode = null;
+    menuScreen.classList.remove("hidden");
+    gameScreen.classList.add("hidden");
+    refreshScoreDisplay();
+  }
+
+  function selectMode(modeKey) {
+    mode = modeKey;
+    menuScreen.classList.add("hidden");
+    gameScreen.classList.remove("hidden");
+    modeEyebrow.textContent = MODE_CONFIG[mode].label;
+    newRoundPool();
+    nextRound();
+  }
+
   // ---------------------------------------------------------------
   // GAME LOGIC
   // ---------------------------------------------------------------
   function newRoundPool() {
-    dishPool = shuffle(Object.keys(MENU));
+    dishPool = shuffle(DISH_NAMES);
   }
 
-  function nextDish() {
-    stampEl.classList.remove("show");
+  function nextRound() {
+    stampEl.classList.remove("show", "pass");
+    roundHadMistake = false;
+    const cfg = MODE_CONFIG[mode];
 
     if (dishPool.length === 0) {
       newRoundPool();
@@ -467,24 +604,50 @@
     }
 
     currentDish = dishPool.pop();
-    remaining = [...MENU[currentDish]];
-    revealed = [];
 
-    dishNameEl.textContent = titleCase(currentDish);
-    entryInput.value = "";
-    feedbackEl.textContent = "\u00A0";
+    // Unify: for target='ingredient' you're finding every ingredient of the dish;
+    // for target='dish' you're finding one thing — the dish name itself.
+    remaining = cfg.target === "ingredient" ? shuffle(MENU[currentDish]) : [currentDish];
+    revealed = [];
+    roundTotal = remaining.length;
+
+    // "given" panel: either show the dish name, or show its full ingredient list
+    if (cfg.given === "dish") {
+      dishNameEl.textContent = titleCase(currentDish);
+      dishNameEl.classList.remove("hidden");
+      givenWrap.classList.add("hidden");
+    } else {
+      dishNameEl.classList.add("hidden");
+      givenWrap.classList.remove("hidden");
+      givenListEl.innerHTML = "";
+      MENU[currentDish].forEach(ing => {
+        const li = document.createElement("li");
+        li.textContent = ing;
+        givenListEl.appendChild(li);
+      });
+    }
+
+    // typed vs choice UI
+    if (cfg.answer === "typed") {
+      entryForm.classList.remove("hidden");
+      choiceGrid.classList.add("hidden");
+      entryInput.value = "";
+      entryInput.placeholder = cfg.target === "ingredient" ? "type an ingredient…" : "type the dish name…";
+    } else {
+      entryForm.classList.add("hidden");
+      choiceGrid.classList.remove("hidden");
+      buildChoiceQuestion();
+    }
+
+    feedbackEl.textContent = " ";
     feedbackEl.className = "feedback neutral";
     render();
-    entryInput.focus();
+    if (cfg.answer === "typed") entryInput.focus();
   }
 
   function render() {
-    const total = MENU[currentDish].length;
-    const done = total - remaining.length;
-    progressEl.textContent = `${done} / ${total} found`;
-    scoreDisplay.textContent = scoreTotal > 0
-      ? `Score ${scoreCorrect}/${scoreTotal}`
-      : "Score —";
+    progressEl.textContent = `${revealed.length} / ${roundTotal} found`;
+    refreshScoreDisplay();
 
     listEl.innerHTML = "";
     revealed.forEach(entry => {
@@ -493,8 +656,8 @@
       const text = document.createElement("span");
       mark.className = "mark " + entry.status;
       text.className = "text " + entry.status;
-      mark.textContent = entry.status === "correct" ? "\u2713" : "\u2717";
-      text.textContent = entry.text;
+      mark.textContent = entry.status === "correct" ? "✓" : "✗";
+      text.textContent = MODE_CONFIG[mode].target === "dish" ? titleCase(entry.text) : entry.text;
       li.appendChild(mark);
       li.appendChild(text);
       listEl.appendChild(li);
@@ -506,20 +669,30 @@
       mark.className = "mark";
       mark.textContent = "?";
       text.className = "blank";
-      text.textContent = "\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014";
+      text.textContent = "———————————";
       li.appendChild(mark);
       li.appendChild(text);
       listEl.appendChild(li);
     });
 
     if (remaining.length === 0) {
-      feedbackEl.textContent = "Dish complete — tap Next Dish to continue";
-      feedbackEl.className = "feedback correct";
-      stampEl.classList.add("show");
+      if (roundHadMistake) {
+        stampEl.textContent = "Fired";
+        stampEl.classList.remove("pass");
+        feedbackEl.textContent = "Dish complete — tap Next to continue";
+        feedbackEl.className = "feedback neutral";
+      } else {
+        stampEl.textContent = "Pass";
+        stampEl.classList.add("pass");
+        feedbackEl.textContent = "Dish complete, all correct — tap Next to continue";
+        feedbackEl.className = "feedback correct";
+      }
+      stampEl.classList.add("show"); // stamp always shows on completion now — red Fired on a skip, green Pass on a clean run
     }
   }
 
-  function submitGuess() {
+  // ---------- typed answer flow ----------
+  function submitTyped() {
     const guess = entryInput.value;
     entryInput.value = "";
     if (!guess.trim() || remaining.length === 0) return;
@@ -531,7 +704,7 @@
       remaining = remaining.filter(i => i !== match);
       revealed.push({ text: match, status: "correct" });
       scoreCorrect++;
-      feedbackEl.textContent = `Correct: ${match}`;
+      feedbackEl.textContent = `Correct: ${MODE_CONFIG[mode].target === "dish" ? titleCase(match) : match}`;
       feedbackEl.className = "feedback correct";
     } else {
       feedbackEl.textContent = "Not quite — try again, or skip it";
@@ -542,30 +715,90 @@
     render();
   }
 
-  function skipIngredient() {
+  // ---------- choice answer flow ----------
+  function buildChoiceQuestion() {
+    if (remaining.length === 0) { choiceGrid.innerHTML = ""; return; }
+    currentTarget = remaining[0];
+
+    let distractors;
+    if (MODE_CONFIG[mode].target === "ingredient") {
+      const excludeSet = new Set(MENU[currentDish].map(normalize));
+      distractors = sample(ALL_INGREDIENTS, excludeSet, 3);
+    } else {
+      const excludeSet = new Set([normalize(currentDish)]);
+      distractors = sample(DISH_NAMES, excludeSet, 3);
+    }
+
+    currentChoices = shuffle([currentTarget, ...distractors]);
+    renderChoices();
+  }
+
+  function renderChoices() {
+    choiceGrid.innerHTML = "";
+    currentChoices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "choice-btn";
+      btn.textContent = MODE_CONFIG[mode].target === "dish" ? titleCase(choice) : choice;
+      btn.addEventListener("click", () => handleChoiceClick(choice, btn));
+      choiceGrid.appendChild(btn);
+    });
+  }
+
+  function handleChoiceClick(choice, btnEl) {
+    scoreTotal++;
+    if (choice === currentTarget) {
+      scoreCorrect++;
+      btnEl.classList.add("correct-flash");
+      feedbackEl.textContent = `Correct: ${MODE_CONFIG[mode].target === "dish" ? titleCase(choice) : choice}`;
+      feedbackEl.className = "feedback correct";
+      saveScore();
+      setTimeout(() => {
+        remaining = remaining.filter(i => i !== currentTarget);
+        revealed.push({ text: currentTarget, status: "correct" });
+        render();
+        if (remaining.length > 0) buildChoiceQuestion();
+        else choiceGrid.innerHTML = "";
+      }, 350);
+    } else {
+      btnEl.classList.add("wrong");
+      feedbackEl.textContent = "Not quite — try another option";
+      feedbackEl.className = "feedback wrong";
+      saveScore();
+    }
+  }
+
+  // ---------- skip ----------
+  function skipCurrent() {
     if (remaining.length === 0) return;
-    const item = remaining.shift();
+    roundHadMistake = true;
+    const item = MODE_CONFIG[mode].answer === "choice" ? currentTarget : remaining[0];
+    remaining = remaining.filter(i => i !== item);
     revealed.push({ text: item, status: "skipped" });
-    feedbackEl.textContent = `Skipped — answer was: ${item}`;
+    feedbackEl.textContent = `Skipped — answer was: ${MODE_CONFIG[mode].target === "dish" ? titleCase(item) : item}`;
     feedbackEl.className = "feedback neutral";
     render();
+    if (MODE_CONFIG[mode].answer === "choice") {
+      if (remaining.length > 0) buildChoiceQuestion();
+      else choiceGrid.innerHTML = "";
+    }
   }
 
   // ---------------------------------------------------------------
   // EVENTS
   // ---------------------------------------------------------------
-  entryForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    submitGuess();
+  document.querySelectorAll(".menu-item").forEach(btn => {
+    btn.addEventListener("click", () => selectMode(btn.dataset.mode));
   });
-  skipBtn.addEventListener("click", skipIngredient);
-  nextBtn.addEventListener("click", nextDish);
+  backBtn.addEventListener("click", showMenu);
+  entryForm.addEventListener("submit", e => { e.preventDefault(); submitTyped(); });
+  skipBtn.addEventListener("click", skipCurrent);
+  nextBtn.addEventListener("click", nextRound);
 
   // ---------------------------------------------------------------
   // INIT
   // ---------------------------------------------------------------
-  newRoundPool();
-  nextDish();
+  showMenu();
 })();
 </script>
 
